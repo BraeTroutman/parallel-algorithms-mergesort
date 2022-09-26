@@ -10,12 +10,12 @@ merge function, where we’ll use STL’s merge function.
 
 ## Questions:
 
-1. Define $k$ to be the number of  levels of the mergesort recursion tree (assume that $\frac{n}{b}$ is a power of 2)
-	1. how many mergesort base cases are there as a function of $k$
-	2. how many merge base cases are there as a function of $k$
+1. Define $k$ to be the number of  levels of the `mergesort` recursion tree (assume that $\frac{n}{b}$ is a power of 2)
+	1. how many `mergesort` base cases are there as a function of $k$
+	2. how many `merge` base cases are there as a function of $k$
 
 2. Parallelize the code correctly
-	1. parallelize  the mergesort and merge functions  using OpenMP's `task` and `taskwait` constructs.
+	1. parallelize  the `mergesort` and `merge` functions  using OpenMP's `task` and `taskwait` constructs.
 	2. write a recursive parallel function to replace the call to STL's `copy` function, and use the same base case size as `mergesort` and `merge`
 
 3. Explore the performance of your parallel code
@@ -23,7 +23,7 @@ merge function, where we’ll use STL’s merge function.
 	2. explain the performance behavior you see as you vary $bc$
 
 4. Analyze the task scheduling problem
-	1. what mergesort base cases can be performed in parallel? What merge base cases can be executed in parallel?
+	1. what mergesort base cases can be performed in parallel? What `merge` base cases can be executed in parallel?
 	2. if you could decide on a static schedule of base cases to threads, what would it be?
 	3. instrument your code to determine how OpenMP schedules tasks to threads (it will likely vary from execution to execution). How does it compare to your preferred static schedule? What makes your static schedule better (or worse)?
 
