@@ -11,24 +11,24 @@ merge function, where we’ll use STL’s merge function.
 ## Questions:
 
 1. Define $k$ to be the number of  levels of the mergesort recursion tree (assume that $\frac{n}{b}$ is a power of 2)
-	a. how many mergesort base cases are there as a function of $k$
-	b. how many merge base cases are there as a function of $k$
+	1. how many mergesort base cases are there as a function of $k$
+	2. how many merge base cases are there as a function of $k$
 
 2. Parallelize the code correctly
-	a. parallelize  the mergesort and merge functions  using OpenMP's `task` and `taskwait` constructs.
-	b. write a recursive parallel function to replace the call to STL's `copy` function, and use the same base case size as `mergesort` and `merge`
+	1. parallelize  the mergesort and merge functions  using OpenMP's `task` and `taskwait` constructs.
+	2. write a recursive parallel function to replace the call to STL's `copy` function, and use the same base case size as `mergesort` and `merge`
 
 3. Explore the performance of your parallel code
-	a. what effect does $bc$ have on the performance of your parallel code? What is the best strategy for choosing $bc$ given $n$ and $p$? Justify your choice with empirical evidence.
-	b. explain the performance behavior you see as you vary $bc$
+	1. what effect does $bc$ have on the performance of your parallel code? What is the best strategy for choosing $bc$ given $n$ and $p$? Justify your choice with empirical evidence.
+	2. explain the performance behavior you see as you vary $bc$
 
 4. Analyze the task scheduling problem
-	a. what mergesort base cases can be performed in parallel? What merge base cases can be executed in parallel?
-	b. if you could decide on a static schedule of base cases to threads, what would it be?
-	c. instrument your code to determine how OpenMP schedules tasks to threads (it will likely vary from execution to execution). How does it compare to your preferred static schedule? What makes your static schedule better (or worse)?
+	1. what mergesort base cases can be performed in parallel? What merge base cases can be executed in parallel?
+	2. if you could decide on a static schedule of base cases to threads, what would it be?
+	3. instrument your code to determine how OpenMP schedules tasks to threads (it will likely vary from execution to execution). How does it compare to your preferred static schedule? What makes your static schedule better (or worse)?
 
 5. Evaluate your parallel performance
-	a. report your parallel performance (speedup and efficiency) for a significantly large problem from 1 to 44 threads. Always compare to the sequential performance of STL's `sort` function. 
-	b. why does efficiency differ between $p$ being a power of 2 or not?
-	c. what are the barriers to better parallel scaling?
+	1. report your parallel performance (speedup and efficiency) for a significantly large problem from 1 to 44 threads. Always compare to the sequential performance of STL's `sort` function. 
+	2. why does efficiency differ between $p$ being a power of 2 or not?
+	3. what are the barriers to better parallel scaling?
 
