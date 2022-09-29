@@ -63,6 +63,7 @@ void mergesort(int* a, int* tmp, int n, int bc)
 {
     if(n <= bc) {
         sort(a, a+n);
+	cout << "Base case reached!" << endl;
         return;
     }
     
