@@ -92,7 +92,7 @@ void recmerge(int* a, int n, int* b, int m, int* c, int bc) {
 
     if(n+m<=bc){
         merge(a, a+n, b, b+m, c);
-	cout << "Base case reached" << endl;
+	//cout << "Base case reached" << endl;
         return;
     }
 
