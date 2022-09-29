@@ -16,6 +16,8 @@ merge function, where we’ll use STL’s merge function.
 	if the recursion tree of mergesort has $k$ levels, then the number of leaves in the recurrence tree (the number of base cases) will $2^k$ leaves. This is because at each level of the recurrence tree each node can have two children, so as the number of levels grows from 0 onwards the number of leaves grows to $2^k$.
 	
 	2. how many `merge` base cases are there as a function of $k$
+	
+	such a function $f(l)$ would be $f(l) = l\times2^l$. This is because for every base case of mergesort, we then have to progressively merge those solutions back together once for each level of the tree to percolate back up to our full list of sorted values.
 
 2. Parallelize the code correctly
 	1. parallelize  the `mergesort` and `merge` functions  using OpenMP's `task` and `taskwait` constructs.
