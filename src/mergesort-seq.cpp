@@ -57,13 +57,21 @@ int main(int argc, char** argv) {
 
 }
 
+void printArray(int* arr, int len) {
+    for (int i = 0; i < len; i++) {
+	cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
 // sorts array a of length n, tmp is workspace of length n,
 // bc is base case size to switch to STL sort
 void mergesort(int* a, int* tmp, int n, int bc)
 {
     if(n <= bc) {
         sort(a, a+n);
-	cout << "Base case reached!" << endl;
+	//cout << "Base case reached!" << endl;
+	//printArray(a, n);	
         return;
     }
     
