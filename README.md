@@ -12,6 +12,7 @@ merge function, where we’ll use STL’s merge function.
 
 1. Define $k$ to be the number of  levels of the `mergesort` recursion tree (assume that $\frac{n}{b}$ is a power of 2)
 	1. how many `mergesort` base cases are there as a function of $k$
+		if the recursion tree of mergesort has $k$ levels, then the number of leaves in the recurrence tree (the number of base cases) will $2^k$ leaves. This is because at each level of the recurrence tree each node can have two children, so as the number of levels grows from 0 onwards the number of leaves grows to $2^k$.
 	2. how many `merge` base cases are there as a function of $k$
 
 2. Parallelize the code correctly
