@@ -8,6 +8,7 @@ using namespace std;
 void mergesort(int* a, int* tmp, int n, int bc);
 void medianofunion(int* a, int n, int& ia, int* b, int m, int& ib);
 void recmerge(int* a, int n, int* b, int m, int* c, int bc);
+void printArray(int* arr, int len);
 
 int main(int argc, char** argv) {
 
@@ -34,7 +35,13 @@ int main(int argc, char** argv) {
 
     // sort array using mergesort (and time it)
     double start_mergeSort = omp_get_wtime();
-    mergesort(v, t, length, bc);
+    #pragma omp parallel
+    {
+    	#pragma omp single
+    	mergesort(v, t, length, bc);
+    	#pragma omp taskwait
+    }
+
     double elapsed_mergeSort = omp_get_wtime() - start_mergeSort;
 
     // sort array using STL (and time it)
@@ -61,16 +68,22 @@ int main(int argc, char** argv) {
 // bc is base case size to switch to STL sort
 void mergesort(int* a, int* tmp, int n, int bc)
 {
+    int tid = omp_get_thread_num();
+    cout << "Thread #" << tid << " is sorting: ";
+    printArray(a, n);
+
     if(n <= bc) {
         sort(a, a+n);
         return;
     }
     
     // sort left and right recursively
-    int mid = n / 2;
+    int mid = n / 2; 
+    #pragma omp task
     mergesort(a, tmp, mid, bc);
+    #pragma omp task
     mergesort(a + mid, tmp + mid, n - mid, bc);
-
+    #pragma omp taskwait
     // merge left and right into tmp and copy back into a (using STL)
     recmerge(a, mid, a+mid, n-mid, tmp, bc);
     copy(tmp,tmp+n,a);
@@ -132,3 +145,10 @@ void medianofunion(int *a, int n, int& ma, int *b, int m, int& mb)
     }
 }
 
+void printArray(int* a, int len) {
+	cout << "[ ";
+	for (int i = 0; i < len; i++) {
+		cout << a[i] << " ";
+	}
+	cout << "]" << endl;
+}
