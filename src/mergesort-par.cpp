@@ -77,7 +77,6 @@ void mergesort(int* a, int* tmp, int n, int bc)
     int mid = n / 2; 
     #pragma omp task
     mergesort(a, tmp, mid, bc);
-    #pragma omp task
     mergesort(a + mid, tmp + mid, n - mid, bc);
     #pragma omp taskwait
     // merge left and right into tmp and copy back into a (using STL)
@@ -99,8 +98,10 @@ void recmerge(int* a, int n, int* b, int m, int* c, int bc) {
     medianofunion(a, n, i, b, m, j);
 
     // merge left and right recursively
+    #pragma omp task 
     recmerge(a, i, b, j, c, bc);
     recmerge(a+i, n-i, b+j, m-j, c+i+j, bc);
+    #pragma omp taskwait
 }
     
 // computes median of union of array a of length n and array b of length m
