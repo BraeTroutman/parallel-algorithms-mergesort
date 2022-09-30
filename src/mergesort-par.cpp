@@ -39,7 +39,6 @@ int main(int argc, char** argv) {
     {
     	#pragma omp single
     	mergesort(v, t, length, bc);
-    	#pragma omp taskwait
     }
 
     double elapsed_mergeSort = omp_get_wtime() - start_mergeSort;
@@ -69,8 +68,8 @@ int main(int argc, char** argv) {
 void mergesort(int* a, int* tmp, int n, int bc)
 {
     int tid = omp_get_thread_num();
-    cout << "Thread #" << tid << " is sorting: ";
-    printArray(a, n);
+//    cout << "Thread #" << tid << " is sorting: ";
+//    printArray(a, n);
 
     if(n <= bc) {
         sort(a, a+n);
@@ -81,7 +80,6 @@ void mergesort(int* a, int* tmp, int n, int bc)
     int mid = n / 2; 
     #pragma omp task
     mergesort(a, tmp, mid, bc);
-    #pragma omp task
     mergesort(a + mid, tmp + mid, n - mid, bc);
     #pragma omp taskwait
     // merge left and right into tmp and copy back into a (using STL)
@@ -104,9 +102,10 @@ void recmerge(int* a, int n, int* b, int m, int* c, int bc) {
     medianofunion(a, n, i, b, m, j);
 
     // merge left and right recursively
+    #pragma omp task
     recmerge(a, i, b, j, c, bc);
     recmerge(a+i, n-i, b+j, m-j, c+i+j, bc);
-    
+    #pragma omp taskwait
 }
     
 // computes median of union of array a of length n and array b of length m
