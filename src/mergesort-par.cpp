@@ -9,6 +9,7 @@ void mergesort(int* a, int* tmp, int n, int bc);
 void medianofunion(int* a, int n, int& ia, int* b, int m, int& ib);
 void recmerge(int* a, int n, int* b, int m, int* c, int bc);
 void printArray(int* arr, int len);
+void parcopy(int* start, int* end, int* dest, int bc);
 
 int main(int argc, char** argv) {
 
@@ -81,7 +82,7 @@ void mergesort(int* a, int* tmp, int n, int bc)
     #pragma omp taskwait
     // merge left and right into tmp and copy back into a (using STL)
     recmerge(a, mid, a+mid, n-mid, tmp, bc);
-    copy(tmp,tmp+n,a);
+    parcopy(tmp,tmp+n,a,bc);
 }
 
 // merges sorted arrays a (length n) and b (length m) into array c (length n+m),
@@ -147,3 +148,18 @@ void printArray(int* a, int len) {
 	}
 	cout << "]" << endl;
 }
+
+void parcopy(int* start, int* end, int* dest, int bc) {
+	int len = end - start;
+	if (len <= bc) {
+		copy(start, end, dest);
+		return;
+	}
+
+	int mid = len/2;
+	#pragma omp task
+	parcopy(start, start+mid, dest, bc); 
+	parcopy(start+mid, end, dest+mid, bc);
+	#pragma omp taskwait
+}	
+
