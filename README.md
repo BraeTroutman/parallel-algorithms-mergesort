@@ -17,7 +17,7 @@ merge function, where we’ll use STL’s merge function.
 	
 	2. how many `merge` base cases are there as a function of $k$
 	
-	such a function $f(l)$ would be $f(l) = l\times2^l$. This is because for every base case of mergesort, we then have to progressively merge those solutions back together once for each level of the tree to percolate back up to our full list of sorted values.
+	such a function $f(k)$ would be $f(k) = k\times2^k$. This is because for every base case of mergesort, we then have to progressively merge those solutions back together once for each level of the tree to percolate back up to our full list of sorted values.
 
 2. Parallelize the code correctly
 	1. parallelize  the `mergesort` and `merge` functions  using OpenMP's `task` and `taskwait` constructs.
