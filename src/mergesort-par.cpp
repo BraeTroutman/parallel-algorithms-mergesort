@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
     }
 
     // report timings
-    cout << length << ',' << bc << ',' << nthreads << 
+    cout << length << ',' << bc << ',' << nthreads << ',' <<
 	    elapsed_mergeSort << ',' << elapsed_sort << ',' << 
 	    elapsed_sort / elapsed_mergeSort << endl; 
 
