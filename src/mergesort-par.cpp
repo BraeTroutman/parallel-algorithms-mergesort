@@ -14,17 +14,20 @@ void recmerge(int* a, int n, int* b, int m, int* c, int bc);
 string printArray(int* arr, int len);
 void parcopy(int* start, int* end, int* dest, int bc);
 
+char verbose;
+
 int main(int argc, char** argv) {
 
     // read inputs
-    if(argc != 5) {
-        cout << "Usage: ./a.out seed length basecase nthreads" << endl;
+    if(argc != 6) {
+        cout << "Usage: ./a.out seed length basecase nthreads verbose(y/n)" << endl;
         return 1;
     }
     srand(atoi(argv[1]));
     int length = atoi(argv[2]);
     int bc = atoi(argv[3]);
     int nthreads = atoi(argv[4]);
+	verbose = argv[5][0];	
     omp_set_num_threads(nthreads);
 
     // allocate memory
@@ -74,10 +77,12 @@ void mergesort(int* a, int* tmp, int n, int bc)
 //    printArray(a, n);
 
     if(n <= bc) {
-		#pragma omp critical
-		cout << "Thread #" << tid << 
-			" is executing a mergeSORT base case on the list: " << 
-			printArray(a,n) << endl;
+		if (verbose == 'y') {
+			#pragma omp critical
+			cout << "Thread #" << tid << 
+				" is executing a mergeSORT base case on the list: " << 
+				printArray(a,n) << endl;
+		}
         sort(a, a+n);
         return;
     }
@@ -98,11 +103,13 @@ void mergesort(int* a, int* tmp, int n, int bc)
 void recmerge(int* a, int n, int* b, int m, int* c, int bc) {
     if(n+m<=bc){
 		int tid = omp_get_thread_num();
-		#pragma omp critical
-		cout << "Thread #" << tid << 
-			" is executing a MERGE base case on the lists:" << 
-			printArray(a,n) << " " << 
-			printArray(b,m) << endl;
+		if (verbose == 'y') {
+			#pragma omp critical
+			cout << "Thread #" << tid << 
+				" is executing a MERGE base case on the lists:" << 
+				printArray(a,n) << " " << 
+				printArray(b,m) << endl;
+		}
         merge(a, a+n, b, b+m, c);
         return;
     }
