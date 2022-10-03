@@ -52,8 +52,9 @@ int main(int argc, char** argv) {
     }
 
     // report timings
-    cout << "time:   \t" << elapsed_mergeSort << '\t' << elapsed_sort << endl;
-    cout << "speedup:\t" << elapsed_sort / elapsed_mergeSort << endl; 
+    cout << length << ',' << bc << ',' << nthreads << 
+	    elapsed_mergeSort << ',' << elapsed_sort << ',' << 
+	    elapsed_sort / elapsed_mergeSort << endl; 
 
     delete [] v2;
     delete [] t;
