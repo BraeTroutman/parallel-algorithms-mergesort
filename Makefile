@@ -12,3 +12,7 @@ $(BUILDDIR)/par-merge: src/mergesort-par.cpp
 	mkdir -p $(BUILDDIR)
 	g++ -fopenmp src/mergesort-par.cpp -o bin/par-merge
 
+$(BUILDDIR)/jc: src/JC_mergesort-par.cpp
+	mkdir -p $(BUILDDIR)
+	g++ -fopenmp src/mergesort-par.cpp -o bin/jc
+
