@@ -3,12 +3,15 @@
 #include <climits>
 #include <cassert>
 #include <omp.h>
+#include <string>
+#include <sstream>
+
 using namespace std;
 
 void mergesort(int* a, int* tmp, int n, int bc);
 void medianofunion(int* a, int n, int& ia, int* b, int m, int& ib);
 void recmerge(int* a, int n, int* b, int m, int* c, int bc);
-void printArray(int* arr, int len);
+string printArray(int* arr, int len);
 void parcopy(int* start, int* end, int* dest, int bc);
 
 int main(int argc, char** argv) {
@@ -71,6 +74,10 @@ void mergesort(int* a, int* tmp, int n, int bc)
 //    printArray(a, n);
 
     if(n <= bc) {
+		#pragma omp critical
+		cout << "Thread #" << tid << 
+			" is executing a mergeSORT base case on the list: " << 
+			printArray(a,n) << endl;
         sort(a, a+n);
         return;
     }
@@ -89,8 +96,13 @@ void mergesort(int* a, int* tmp, int n, int bc)
 // merges sorted arrays a (length n) and b (length m) into array c (length n+m),
 // bc is base case size to switch to STL merge
 void recmerge(int* a, int n, int* b, int m, int* c, int bc) {
-
     if(n+m<=bc){
+		int tid = omp_get_thread_num();
+		#pragma omp critical
+		cout << "Thread #" << tid << 
+			" is executing a MERGE base case on the lists:" << 
+			printArray(a,n) << " " << 
+			printArray(b,m) << endl;
         merge(a, a+n, b, b+m, c);
         return;
     }
@@ -142,12 +154,13 @@ void medianofunion(int *a, int n, int& ma, int *b, int m, int& mb)
     }
 }
 
-void printArray(int* a, int len) {
-	cout << "[ ";
+string printArray(int* a, int len) {
+	ostringstream str;
+	str << "[ ";
 	for (int i = 0; i < len; i++) {
-		cout << a[i] << " ";
+		str << a[i] << " ";
 	}
-	cout << "]" << endl;
+	return str.str() + "]";
 }
 
 void parcopy(int* start, int* end, int* dest, int bc) {
