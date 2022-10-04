@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
     cout << length << ',' << bc << ',' << nthreads << ',' <<
 	    elapsed_mergeSort << ',' << elapsed_sort << ',' << 
 	    elapsed_sort / elapsed_mergeSort << ',' <<
-		(elapsed_sort / elapsed_mergeSort) / nthreads << endl; 
+		(elapsed_sort / elapsed_mergeSort) / (double) nthreads << endl; 
 
     delete [] v2;
     delete [] t;
